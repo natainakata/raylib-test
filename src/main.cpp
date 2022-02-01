@@ -5,25 +5,25 @@ constexpr auto SCREEN_HEIGHT = 450;
 
 int main()
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Window title");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "keyboard input");
     SetTargetFPS(60);
 
-    Texture2D texture = LoadTexture(ASSETS_PATH"test.png");
+    Vector2 ballPosition = { (float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2 };
+
+    // Texture2D texture = LoadTexture(ASSETS_PATH"test.png");
 
     while (!WindowShouldClose())
     {
+        // update
+        if (IsKeyDown(KEY_D)) ballPosition.x += 2.0f;
+        if (IsKeyDown(KEY_A)) ballPosition.x -= 2.0f;
+        if (IsKeyDown(KEY_W)) ballPosition.y -= 2.0f;
+        if (IsKeyDown(KEY_S)) ballPosition.y += 2.0f;
+
         BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        const int texture_x = SCREEN_WIDTH / 2 - texture.width / 2;
-        const int texture_y = SCREEN_HEIGHT / 2 - texture.height / 2;
-        DrawTexture(texture, texture_x, texture_y, WHITE);
-
-        const char* text = "OMG! IT WORKS!";
-        const Vector2 text_size = MeasureTextEx(GetFontDefault(), text, 20, 1);
-        DrawText(text, SCREEN_WIDTH / 2 - text_size.x / 2, texture_y + texture.height + text_size.y + 10, 20, BLACK);
-
+            ClearBackground(RAYWHITE);
+            DrawText("move ball with wasd keys", 10, 10, 20, DARKGRAY);
+            DrawCircleV(ballPosition, 50, MAROON);
         EndDrawing();
     }
 
